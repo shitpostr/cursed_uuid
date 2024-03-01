@@ -17,7 +17,6 @@ def octal_to_emojis(octal_str):
         "06": "\U0001F428",  # 🐨
         "07": "\U0001F42F",  # 🐯
         "10": "\U0001F981",  # 🦁
-        '10': '\U0001F42F',  # 🐯
         '11': '\U0001F43E',  # 🐾
         '12': '\U0001F42E',  # 🐮
         '13': '\U0001F437',  # 🐷
@@ -87,9 +86,94 @@ def octal_to_emojis(octal_str):
     emojis = ""
     for i in range(0, len(octal_digits), 2):
         two_digit = octal_digits[i:i+2]
+        if int(two_digit) < 10 and len(two_digit) < 2:
+            two_digit = "0" + two_digit
         emojis += emoji_map.get(two_digit, default_emoji)
     
     return emojis
+
+# Function to map octal digits to terms of endearment
+def octal_to_toes(octal_str):
+    toe_map = {
+"00" :	'Honey',
+"01" :	'Sweetheart',
+"02" :	'Love',
+"03" :	'Angel',
+"04" :	'Darling',
+"05" :	'Baby',
+"06" :	'Dear',
+"07" :	'Sweetie',
+"10" :	'Beloved',
+"11" :	'Boo',
+"12" :	'Pumpkin',
+"13" :	'Doll',
+"14" :	'Sunshine',
+"15" :	'Precious',
+"16" :	'Sugar',
+"17" :	'Babe',
+"20" :	'Cutie',
+"21" :	'Snugglebug',
+"22" :	'Peach',
+"23" :	'Snookums',
+"24" :	'Pookie',
+"25" :	'Bear',
+"26" :	'Kitten',
+"27" :	'Princess',
+"30" :	'Handsome',
+"31" :	'Beau',
+"32" :	'Cheri',
+"33" :	'Lovebug',
+"34" :	'Bae',
+"35" :	'Cuddlebug',
+"36" :	'Buttercup',
+"37" :	'Cupcake',
+"40" :	'Honeybun',
+"41" :	'Bubba',
+"42" :	'Ducky',
+"43" :	'Snuggles',
+"44" :	'Muffin',
+"45" :	'Sweetpea',
+"46" :	'Cherub',
+"47" :	'Teddy',
+"50" :	'Dreamboat',
+"51" :	'Lamb',
+"52" :	'Jewel',
+"53" :	'Star',
+"54" :	'Treasure',
+"55" :	'Dove',
+"56" :	'Petal',
+"57" :	'Cookie',
+"60" :	'Bunny',
+"61" :	'Heart',
+"62" :	'Peachy',
+"63" :	'Snooky',
+"64" :	'Tootsie',
+"65" :	'Bubble',
+"66" :	'Zaddy',
+"67" :	'Sweets',
+"70" :	'Daddy',
+"71" :	'Gem',
+"72" :	'Dearheart',
+"73" :	'Papi',
+"74" :	'Lovemuffin',
+"75" :	'Joy',
+"76" :	'corazon',
+"77" :	'Mami'
+    }
+
+
+    # Convert octal string to two-digit groups, skipping the "0o" prefix
+    octal_digits = octal_str[2:]
+    emojis = ""
+    for i in range(0, len(octal_digits), 2):
+        two_digit = octal_digits[i:i+2]
+        if int(two_digit) < 10 and len(two_digit) < 2:
+            two_digit = "0" + two_digit
+        print(two_digit)
+        emojis += toe_map.get(two_digit, "lovekitten")+ " "
+    
+    return emojis
+
 
 # Main function to generate emoji string from UUID
 def generate_emoji_string():
@@ -104,5 +188,19 @@ def generate_emoji_string():
     
     return my_uuid,emoji_str
 
+# Main function to generate emoji string from UUID
+def generate_toe_string():
+    # Generate a UUID
+    my_uuid = uuid.uuid4()
+    
+    # Convert the UUID to octal
+    octal_uuid = uuid_to_octal(my_uuid)
+    
+    # Convert octal digits to emojis
+    toe_str = octal_to_toes(octal_uuid)
+    
+    return my_uuid,toe_str.strip()
+
 # Generate and print the emoji string
 print(generate_emoji_string())
+print(generate_toe_string())
